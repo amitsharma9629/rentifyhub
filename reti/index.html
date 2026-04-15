@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RentifyHub — Find Your Perfect Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Rentify<span>Hub</span></div>
+  <ul class="nav-links">
+    <li><a href="#listings">Listings</a></li>
+    <li><a href="#nearby">Nearby</a></li>
+    <li><a href="#agents">Agents</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn-ghost" onclick="window.location.href='login.html'">Sign In</button>
+    <button class="btn-primary">List Property</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🏡 Premium Property Rentals</div>
+  <h1>Find Your <em>Dream Home</em><br>In the Perfect Neighbourhood</h1>
+  <p>Discover thousands of verified properties near you. Explore details, compare options, and book enquiries — all in one place.</p>
+  <div class="search-box">
+    <div class="search-field">
+      <label>Location</label>
+      <input type="text" placeholder="Search all over India (Delhi, Mumbai, Bangalore, etc.)" id="locInput">
+    </div>
+    <div class="search-field">
+      <label>Property Type</label>
+      <select id="typeFilter">
+        <option>All Types</option>
+        <option>Apartment</option>
+        <option>Villa</option>
+        <option>Studio</option>
+        <option>Penthouse</option>
+        <option>Commercial</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Budget</label>
+      <select id="budgetFilter">
+        <option>Any Budget</option>
+        <option>Under ₹15,000/mo</option>
+        <option>₹15k – ₹30k/mo</option>
+        <option>₹30k – ₹60k/mo</option>
+        <option>Above ₹60,000/mo</option>
+      </select>
+    </div>
+    <button class="search-btn" onclick="doSearch()">Search 🔍</button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat"><div class="stat-num">12,400+</div><div class="stat-label">Active Listings</div></div>
+  <div class="stat"><div class="stat-num">8,200+</div><div class="stat-label">Happy Tenants</div></div>
+  <div class="stat"><div class="stat-num">340+</div><div class="stat-label">Cities Covered</div></div>
+  <div class="stat"><div class="stat-num">4.8★</div><div class="stat-label">Average Rating</div></div>
+</div>
+
+<!-- LISTINGS SECTION -->
+<div class="section" id="listings">
+  <div class="section-header fade-in">
+    <h2 class="section-title">Featured <span>Properties</span></h2>
+    <a href="#" class="view-all">View All →</a>
+  </div>
+
+  <div class="filter-tabs fade-in">
+    <button class="tab active" onclick="filterProp(this,'all')">All</button>
+    <button class="tab" onclick="filterProp(this,'rent')">For Rent</button>
+    <button class="tab" onclick="filterProp(this,'sale')">For Sale</button>
+    <button class="tab" onclick="filterProp(this,'new')">New Launch</button>
+    <button class="tab" onclick="filterProp(this,'furnished')">Furnished</button>
+  </div>
+
+  <div class="property-grid" id="propertyGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</div>
+
+<!-- MAP / NEARBY SECTION -->
+<section class="map-section" id="nearby">
+  <div class="map-wrapper">
+    <div>
+      <h2 class="section-title" style="color:#fff;margin-bottom:1.5rem;">Properties <span>Near You</span></h2>
+      <div class="map-container">
+        <svg class="map-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+          <!-- Roads -->
+          <rect width="800" height="500" fill="#162030"/>
+          <line x1="0" y1="250" x2="800" y2="250" stroke="#1e3a50" stroke-width="30"/>
+          <line x1="400" y1="0" x2="400" y2="500" stroke="#1e3a50" stroke-width="30"/>
+          <line x1="0" y1="150" x2="800" y2="150" stroke="#1a3040" stroke-width="15"/>
+          <line x1="0" y1="380" x2="800" y2="380" stroke="#1a3040" stroke-width="15"/>
+          <line x1="200" y1="0" x2="200" y2="500" stroke="#1a3040" stroke-width="15"/>
+          <line x1="600" y1="0" x2="600" y2="500" stroke="#1a3040" stroke-width="15"/>
+          <!-- Road dashes -->
+          <line x1="0" y1="250" x2="800" y2="250" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="20,15"/>
+          <line x1="400" y1="0" x2="400" y2="500" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="20,15"/>
+          <!-- Blocks -->
+          <rect x="30" y="30" width="150" height="100" rx="4" fill="#1c2e40"/>
+          <rect x="220" y="30" width="160" height="100" rx="4" fill="#1c2e40"/>
+          <rect x="430" y="30" width="150" height="100" rx="4" fill="#1c2e40"/>
+          <rect x="620" y="30" width="150" height="100" rx="4" fill="#1c2e40"/>
+          <rect x="30" y="170" width="150" height="60" rx="4" fill="#1c2e40"/>
+          <rect x="220" y="170" width="160" height="60" rx="4" fill="#1c2e40"/>
+          <rect x="430" y="170" width="150" height="60" rx="4" fill="#1c2e40"/>
+          <rect x="620" y="170" width="150" height="60" rx="4" fill="#1c2e40"/>
+          <rect x="30" y="270" width="150" height="90" rx="4" fill="#1c2e40"/>
+          <rect x="220" y="270" width="160" height="90" rx="4" fill="#1c2e40"/>
+          <rect x="430" y="270" width="150" height="90" rx="4" fill="#1c2e40"/>
+          <rect x="620" y="270" width="150" height="90" rx="4" fill="#1c2e40"/>
+          <rect x="30" y="400" width="150" height="80" rx="4" fill="#1c2e40"/>
+          <rect x="220" y="400" width="160" height="80" rx="4" fill="#1c2e40"/>
+          <rect x="430" y="400" width="150" height="80" rx="4" fill="#1c2e40"/>
+          <rect x="620" y="400" width="150" height="80" rx="4" fill="#1c2e40"/>
+          <!-- Your Location -->
+          <circle cx="400" cy="250" r="14" fill="rgba(201,168,76,0.2)" stroke="#C9A84C" stroke-width="2"/>
+          <circle cx="400" cy="250" r="5" fill="#C9A84C"/>
+          <circle cx="400" cy="250" r="30" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+          <circle cx="400" cy="250" r="55" fill="none" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+          <!-- Property Pins -->
+          <g class="map-pin" onclick="showPinInfo(1)">
+            <circle cx="160" cy="100" r="14" fill="#2d5a8e"/>
+            <text x="160" y="105" text-anchor="middle" fill="white" font-size="10" font-family="DM Sans">🏢</text>
+            <text x="160" y="125" text-anchor="middle" fill="#C9A84C" font-size="9" font-family="DM Sans" font-weight="bold">₹22k</text>
+          </g>
+          <g class="map-pin" onclick="showPinInfo(2)">
+            <circle cx="530" cy="80" r="14" fill="#2d8e5a"/>
+            <text x="530" y="85" text-anchor="middle" fill="white" font-size="10" font-family="DM Sans">🏡</text>
+            <text x="530" y="105" text-anchor="middle" fill="#C9A84C" font-size="9" font-family="DM Sans" font-weight="bold">₹45k</text>
+          </g>
+          <g class="map-pin" onclick="showPinInfo(3)">
+            <circle cx="130" cy="310" r="14" fill="#8e2d2d"/>
+            <text x="130" y="315" text-anchor="middle" fill="white" font-size="10" font-family="DM Sans">🏠</text>
+            <text x="130" y="335" text-anchor="middle" fill="#C9A84C" font-size="9" font-family="DM Sans" font-weight="bold">₹18k</text>
+          </g>
+          <g class="map-pin" onclick="showPinInfo(4)">
+            <circle cx="660" cy="310" r="14" fill="#6a2d8e"/>
+            <text x="660" y="315" text-anchor="middle" fill="white" font-size="10" font-family="DM Sans">🏘</text>
+            <text x="660" y="335" text-anchor="middle" fill="#C9A84C" font-size="9" font-family="DM Sans" font-weight="bold">₹35k</text>
+          </g>
+          <g class="map-pin" onclick="showPinInfo(5)">
+            <circle cx="280" cy="430" r="14" fill="#8e6a2d"/>
+            <text x="280" y="435" text-anchor="middle" fill="white" font-size="10" font-family="DM Sans">🏢</text>
+            <text x="280" y="455" text-anchor="middle" fill="#C9A84C" font-size="9" font-family="DM Sans" font-weight="bold">₹28k</text>
+          </g>
+          <!-- Legend -->
+          <rect x="20" y="455" width="110" height="30" rx="6" fill="rgba(0,0,0,0.4)"/>
+          <circle cx="35" cy="470" r="4" fill="#C9A84C"/>
+          <text x="45" y="474" fill="rgba(255,255,255,0.6)" font-size="9" font-family="DM Sans">Your location</text>
+          <circle cx="85" cy="470" r="4" fill="#2d5a8e"/>
+          <text x="95" y="474" fill="rgba(255,255,255,0.6)" font-size="9" font-family="DM Sans">Properties</text>
+        </svg>
+      </div>
+    </div>
+    <div class="map-sidebar" id="nearby">
+      <h2 class="section-title" style="color:#fff;">Nearby <span>Homes</span></h2>
+      <div class="nearby-card" onclick="openModal(0)">
+        <div class="nearby-thumb t1"></div>
+        <div class="nearby-info">
+          <div class="price">₹22,000/mo</div>
+          <div class="name">Sunrise Heights Apt</div>
+          <div class="dist">📍 Gomti Nagar · <span class="dist-badge">0.8 km</span></div>
+        </div>
+      </div>
+      <div class="nearby-card" onclick="openModal(1)">
+        <div class="nearby-thumb t2"></div>
+        <div class="nearby-info">
+          <div class="price">₹45,000/mo</div>
+          <div class="name">Green Villa Estates</div>
+          <div class="dist">📍 Aliganj · <span class="dist-badge">1.4 km</span></div>
+        </div>
+      </div>
+      <div class="nearby-card" onclick="openModal(2)">
+        <div class="nearby-thumb t3"></div>
+        <div class="nearby-info">
+          <div class="price">₹28,000/mo</div>
+          <div class="name">Royal Residency</div>
+          <div class="dist">📍 Hazratganj · <span class="dist-badge">2.1 km</span></div>
+        </div>
+      </div>
+      <button class="btn-primary" style="width:100%;padding:0.75rem;margin-top:1rem;font-size:0.9rem;" onclick="doSearch()">View All Nearby →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="features-section" id="about">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <h2 class="section-title fade-in">Why Choose <span>RentifyHub?</span></h2>
+      <p style="color:var(--slate);max-width:500px;margin:0.5rem auto 0;font-size:0.95rem;">Everything you need to find, compare, and secure your ideal home</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in"><div class="feature-icon">🗺️</div><div class="feature-title">Nearby Discovery</div><div class="feature-desc">Real-time map showing properties around your current location with distance filters.</div></div>
+      <div class="feature-card fade-in"><div class="feature-icon">📋</div><div class="feature-title">Detailed Listings</div><div class="feature-desc">Full specs, high-res photos, floor plans, amenities and neighbourhood insights.</div></div>
+      <div class="feature-card fade-in"><div class="feature-icon">📨</div><div class="feature-title">Instant Enquiry</div><div class="feature-desc">One-click booking enquiry directly to owner or agent, with real-time confirmation.</div></div>
+      <div class="feature-card fade-in"><div class="feature-icon">✅</div><div class="feature-title">Verified Properties</div><div class="feature-desc">Every listing is verified and reviewed, ensuring authentic and trustworthy details.</div></div>
+      <div class="feature-card fade-in"><div class="feature-icon">💬</div><div class="feature-title">Chat with Agent</div><div class="feature-desc">Live chat support with certified property agents available 7 days a week.</div></div>
+      <div class="feature-card fade-in"><div class="feature-icon">📊</div><div class="feature-title">Price Analytics</div><div class="feature-desc">Market trend data and price comparison to ensure you always get the best deal.</div></div>
+      <div class="feature-card fade-in"><div class="feature-icon">🔔</div><div class="feature-title">Smart Alerts</div><div class="feature-desc">Save your preferences and get instant alerts when matching properties go live.</div></div>
+      <div class="feature-card fade-in"><div class="feature-icon">🏦</div><div class="feature-title">Home Loan Guide</div><div class="feature-desc">EMI calculator and home loan comparison from top banks, all in one place.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS SECTION -->
+<section class="agents-section" id="agents">
+  <div class="section-header fade-in" style="max-width:1280px;margin:0 auto 2rem;">
+    <h2 class="section-title">Meet Our <span>Agents</span></h2>
+    <a href="#" class="view-all">All Agents →</a>
+  </div>
+  <div class="agents-grid">
+    <div class="agent-card fade-in">
+      <div class="agent-avatar">RS</div>
+      <div class="agent-name">Rahul Sharma</div>
+      <div class="agent-role">Senior Property Advisor</div>
+      <div class="stars">★★★★★</div>
+      <div class="agent-stats"><span>🏠 42 Listings</span><span>📞 Delhi</span></div>
+    </div>
+    <div class="agent-card fade-in">
+      <div class="agent-avatar" style="background:#2d8e5a;color:#fff;">PK</div>
+      <div class="agent-name">Priya Kapoor</div>
+      <div class="agent-role">Residential Specialist</div>
+      <div class="stars">★★★★★</div>
+      <div class="agent-stats"><span>🏠 38 Listings</span><span>📞 Mumbai</span></div>
+    </div>
+    <div class="agent-card fade-in">
+      <div class="agent-avatar" style="background:#2d5a8e;color:#fff;">AM</div>
+      <div class="agent-name">Arjun Mehta</div>
+      <div class="agent-role">Luxury Properties</div>
+      <div class="stars">★★★★☆</div>
+      <div class="agent-stats"><span>🏠 29 Listings</span><span>📞 Bangalore</span></div>
+    </div>
+    <div class="agent-card fade-in">
+      <div class="agent-avatar" style="background:#8e2d2d;color:#fff;">SJ</div>
+      <div class="agent-name">Sana Joshi</div>
+      <div class="agent-role">Commercial Expert</div>
+      <div class="stars">★★★★★</div>
+      <div class="agent-stats"><span>🏠 55 Listings</span><span>📞 Lucknow</span></div>
+    </div>
+    <div class="agent-card fade-in">
+      <div class="agent-avatar" style="background:#6a2d8e;color:#fff;">VG</div>
+      <div class="agent-name">Vikas Gupta</div>
+      <div class="agent-role">Budget Homes Advisor</div>
+      <div class="stars">★★★★☆</div>
+      <div class="agent-stats"><span>🏠 63 Listings</span><span>📞 Pune</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <h2 class="section-title fade-in" style="color:#fff;">What Our <span>Tenants Say</span></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card fade-in">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Found my dream apartment in Lucknow within 3 days! The nearby search feature is incredibly accurate and the enquiry process was seamless."</p>
+        <div class="testi-author"><div class="testi-avatar">AK</div><div><div class="testi-name">Ankita Kumar</div><div class="testi-sub">Rented in Gomti Nagar</div></div></div>
+      </div>
+      <div class="testi-card fade-in">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The agent was professional and the property details were exactly as shown. Zero surprises — everything was transparent and well-documented."</p>
+        <div class="testi-author"><div class="testi-avatar">RV</div><div><div class="testi-name">Rohan Verma</div><div class="testi-sub">Rented in Aliganj</div></div></div>
+      </div>
+      <div class="testi-card fade-in">
+        <div class="testi-stars">★★★★☆</div>
+        <p class="testi-text">"Best rental platform in India. The price analytics helped me negotiate ₹4,000 off my monthly rent. Highly recommend to anyone house hunting!"</p>
+        <div class="testi-author"><div class="testi-avatar">MS</div><div><div class="testi-name">Meera Singh</div><div class="testi-sub">Rented in Hazratganj</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2>Get Notified of <em>New Listings</em></h2>
+  <p>Enter your email and we'll send you the latest properties matching your preferences.</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="your@email.com" id="nlEmail">
+    <button onclick="subscribeNewsletter()">Subscribe</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo">Rentify<span style="color:rgba(255,255,255,0.5)">Hub</span></div>
+      <p class="footer-desc">Your trusted partner for finding premium rental properties across India. Verified listings, expert agents, zero hassle.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Browse</h5>
+      <ul>
+        <li><a href="#">Apartments</a></li>
+        <li><a href="#">Villas</a></li>
+        <li><a href="#">Studios</a></li>
+        <li><a href="#">Penthouses</a></li>
+        <li><a href="#">Commercial</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#">List Property</a></li>
+        <li><a href="#">Find Agent</a></li>
+        <li><a href="#">Home Loans</a></li>
+        <li><a href="#">Legal Help</a></li>
+        <li><a href="#">Movers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 RentifyHub. All rights reserved. · Lucknow, India</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Property Details</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Enquiry submitted successfully!</div>
+
+<script src="nav.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

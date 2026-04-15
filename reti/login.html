@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — RentifyHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Rentify<span>Hub</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html#listings">Listings</a></li>
+    <li><a href="index.html#nearby">Nearby</a></li>
+    <li><a href="index.html#agents">Agents</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn-ghost" onclick="window.location.href='index.html'">Home</button>
+    <button class="btn-primary" onclick="window.location.href='signup.html'">Sign Up</button>
+  </div>
+</nav>
+
+<!-- LOGIN SECTION -->
+<section class="login-section">
+  <div class="login-container">
+    <!-- Left Side - Info -->
+    <div class="login-info">
+      <div class="info-content">
+        <h2>Welcome Back</h2>
+        <p>Access your RentifyHub account to browse properties, manage listings, and connect with verified users.</p>
+        
+        <div class="login-features">
+          <div class="feature-item">
+            <div class="feature-icon">🔐</div>
+            <div>
+              <h4>Secure Access</h4>
+              <p>Your account is protected with industry-standard encryption</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">⏱️</div>
+            <div>
+              <h4>Stay Logged In</h4>
+              <p>Remember me feature for quick access on trusted devices</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔔</div>
+            <div>
+              <h4>Real-time Notifications</h4>
+              <p>Get instant alerts on new properties and inquiries</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💼</div>
+            <div>
+              <h4>Manage Everything</h4>
+              <p>Handle your profile, listings, and preferences in one place</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="login-quote">
+          <p><em>"RentifyHub makes finding and renting properties effortless. Best experience ever!"</em></p>
+          <p class="quote-author">— Amit Singh, Happy Tenant</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Form -->
+    <div class="login-form-wrapper">
+      <div class="form-header">
+        <h3>Sign In to Your Account</h3>
+        <p>Enter your credentials below</p>
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="email">Email or Phone <span class="required">*</span></label>
+          <input type="text" id="email" name="email" placeholder="your@email.com or +91 XXXXX XXXXX" required>
+          <span class="error-msg" id="error-email"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password <span class="required">*</span></label>
+          <div class="password-field">
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <button type="button" class="toggle-password" onclick="toggleLoginPassword()">👁️</button>
+          </div>
+          <span class="error-msg" id="error-password"></span>
+        </div>
+
+        <div class="form-group remember-forgot">
+          <label class="remember-me">
+            <input type="checkbox" id="remember" name="remember">
+            <span>Remember me on this device</span>
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-login">Sign In</button>
+
+        <div class="login-footer">
+          <p>Don't have an account? <a href="signup.html" class="link-gold">Sign Up Now</a></p>
+        </div>
+      </form>
+
+      <div class="divider">OR</div>
+
+      <div class="social-login">
+        <button type="button" class="social-btn google">
+          <span>🔷</span> Continue with Google
+        </button>
+        <button type="button" class="social-btn apple">
+          <span>🍎</span> Continue with Apple
+        </button>
+      </div>
+
+      <div class="security-info">
+        <p>🔒 Your login is secured with 256-bit encryption</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO SECTION -->
+<section class="login-promo">
+  <div class="promo-card">
+    <div class="promo-icon">🎯</div>
+    <h4>First Time on RentifyHub?</h4>
+    <p>Create a free account and get access to 12,400+ verified properties</p>
+    <button class="btn-primary" onclick="window.location.href='signup.html'">Create Free Account</button>
+  </div>
+</section>
+
+<script src="nav.js"></script>
+<script src="login.js"></script>
+
+</body>
+</html>
