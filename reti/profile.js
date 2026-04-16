@@ -1,42 +1,39 @@
-// Profile Management Functions
-
-// Load user data from localStorage on page load
+ 
 window.addEventListener('DOMContentLoaded', function() {
   const user = JSON.parse(localStorage.getItem('rentifyUser'));
   
   if (!user || !user.name) {
-    // Redirect to login if not logged in
+  
     window.location.href = 'login.html';
     return;
   }
 
-  // Load user data into profile
+  
   loadUserProfile(user);
-  // Update navigation
+ 
   updateNavigation();
 });
 
-// Load user profile data
+ 
 function loadUserProfile(user) {
-  // Avatar and basic info
+ 
   document.getElementById('displayName').textContent = user.name || 'User';
   document.getElementById('userType').textContent = user.usertype || 'Renter';
   document.getElementById('userCity').textContent = '📍 ' + (user.city || 'City');
   
-  // Contact information
+ 
   document.getElementById('displayEmail').textContent = user.email || 'N/A';
   document.getElementById('displayPhone').textContent = user.phone || 'N/A';
   
-  // Join date
+ 
   const joinDate = new Date(user.joinDate);
   document.getElementById('joinDate').textContent = 'Member since ' + joinDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
   document.getElementById('joinDateFull').textContent = joinDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  
-  // Avatar initials
+   
   const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   document.getElementById('avatarInitial').textContent = initials;
   
-  // Fill edit form with current data
+  
   document.getElementById('edit-name').value = user.name || '';
   document.getElementById('edit-email').value = user.email || '';
   document.getElementById('edit-phone').value = user.phone || '';
@@ -44,8 +41,7 @@ function loadUserProfile(user) {
   document.getElementById('edit-city').value = user.city || '';
   document.getElementById('edit-bio').value = user.bio || '';
 }
-
-// Update navigation to show user profile
+ 
 function updateNavigation() {
   const user = JSON.parse(localStorage.getItem('rentifyUser'));
   const navCta = document.getElementById('navCta');
@@ -77,7 +73,7 @@ function updateNavigation() {
   }
 }
 
-// Toggle user menu dropdown
+ 
 function toggleUserMenu() {
   const dropdown = document.getElementById('userDropdown');
   if (dropdown) {
@@ -85,7 +81,7 @@ function toggleUserMenu() {
   }
 }
 
-// Close dropdown when clicking outside
+ 
 document.addEventListener('click', function(event) {
   const userMenu = document.querySelector('.nav-user-menu');
   const dropdown = document.getElementById('userDropdown');
@@ -94,37 +90,36 @@ document.addEventListener('click', function(event) {
     dropdown.classList.remove('show');
   }
 });
-
-// Switch between tabs
+ 
 function switchTab(tabName) {
-  // Hide all tabs
+ 
   const tabs = document.querySelectorAll('.tab-content');
   tabs.forEach(tab => tab.classList.remove('active'));
   
-  // Remove active class from menu items
+ 
   const menuItems = document.querySelectorAll('.menu-item');
   menuItems.forEach(item => item.classList.remove('active'));
   
-  // Show selected tab
+ 
   const selectedTab = document.getElementById(tabName);
   if (selectedTab) {
     selectedTab.classList.add('active');
   }
   
-  // Mark menu item as active
+ 
   event.target.classList.add('active');
   
-  // Scroll to top
+   
   window.scrollTo(0, 0);
 }
 
-// Edit profile form submission
+ 
 const editProfileForm = document.getElementById('editProfileForm');
 if (editProfileForm) {
   editProfileForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Clear previous errors
+   
     const allErrors = document.querySelectorAll('.error-msg');
     allErrors.forEach(e => {
       e.textContent = '';
@@ -133,7 +128,6 @@ if (editProfileForm) {
     
     let isValid = true;
     
-    // Validate name
     const name = document.getElementById('edit-name').value.trim();
     if (!name) {
       showProfileError('name', 'Full name is required');
@@ -143,28 +137,26 @@ if (editProfileForm) {
       isValid = false;
     }
     
-    // Validate email
+ 
     const email = document.getElementById('edit-email').value.trim();
     if (!email || !isValidProfileEmail(email)) {
       showProfileError('email', 'Please enter a valid email');
       isValid = false;
     }
-    
-    // Validate phone
+ 
     const phone = document.getElementById('edit-phone').value.trim();
     if (!phone || !isValidProfilePhone(phone)) {
       showProfileError('phone', 'Please enter a valid phone number');
       isValid = false;
     }
     
-    // Validate city
+   
     const city = document.getElementById('edit-city').value.trim();
     if (!city) {
       showProfileError('city', 'City is required');
       isValid = false;
     }
-    
-    // Validate user type
+     
     const usertype = document.getElementById('edit-usertype').value;
     if (!usertype) {
       showProfileError('usertype', 'Please select user type');
@@ -172,7 +164,7 @@ if (editProfileForm) {
     }
     
     if (isValid) {
-      // Update user data
+       
       const user = JSON.parse(localStorage.getItem('rentifyUser'));
       user.name = name;
       user.email = email;
@@ -182,15 +174,14 @@ if (editProfileForm) {
       user.bio = document.getElementById('edit-bio').value.trim();
       
       localStorage.setItem('rentifyUser', JSON.stringify(user));
-      
-      // Reload profile
+     
       loadUserProfile(user);
       updateNavigation();
       
-      // Show success message
+      
       showProfileSuccess('Changes saved successfully!');
       
-      // Switch back to overview
+     
       setTimeout(() => {
         switchTab('overview');
       }, 1500);
@@ -198,7 +189,7 @@ if (editProfileForm) {
   });
 }
 
-// Validation helpers
+ 
 function isValidProfileEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -228,22 +219,20 @@ function showProfileSuccess(message) {
   }, 3000);
 }
 
-// Change avatar (placeholder)
+ 
 function changeAvatar() {
   alert('Avatar upload feature would be implemented here.');
 }
-
-// Change password
+ 
 document.querySelector('.btn-change-password')?.addEventListener('click', function() {
   alert('Password change form would be shown here.');
 });
 
-// Enable 2FA
+ 
 document.querySelector('.btn-enable-2fa')?.addEventListener('click', function() {
   alert('Two-factor authentication setup would be shown here.');
 });
-
-// Logout function
+ 
 function logout() {
   if (confirm('Are you sure you want to logout?')) {
     localStorage.removeItem('rentifyUser');
@@ -251,7 +240,7 @@ function logout() {
   }
 }
 
-// Apply tab from URL parameter if exists
+ 
 const urlParams = new URLSearchParams(window.location.search);
 const tabParam = urlParams.get('tab');
 if (tabParam) {
