@@ -1,4 +1,4 @@
-// Navigation Update - Add to all pages
+ 
 
 window.addEventListener('DOMContentLoaded', function() {
   updateNavigationForAllPages();
@@ -11,7 +11,7 @@ function updateNavigationForAllPages() {
   if (!navCta) return;
   
   if (user && user.name) {
-    // User is logged in - show profile button
+    
     navCta.innerHTML = `
       <div class="nav-user-menu">
         <button class="btn-user-profile" onclick="toggleUserMenu()">
@@ -29,7 +29,7 @@ function updateNavigationForAllPages() {
       </div>
     `;
   } else {
-    // User is not logged in - show login/signup buttons
+ 
     navCta.innerHTML = `
       <button class="btn-ghost" onclick="window.location.href='login.html'">Sign In</button>
       <button class="btn-primary" onclick="window.location.href='signup.html'">Sign Up</button>
@@ -52,7 +52,7 @@ function logout() {
   }
 }
 
-// Close dropdown when clicking outside
+ 
 document.addEventListener('click', function(event) {
   const userMenu = document.querySelector('.nav-user-menu');
   const dropdown = document.getElementById('userDropdown');
