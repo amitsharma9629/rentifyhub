@@ -1,15 +1,14 @@
-// Form Validation & Interactivity
+ 
 const loginForm = document.getElementById('loginForm');
 
-// Email or Phone validation
+ 
 function isValidEmailOrPhone(input) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^[6-9]\d{9}$/;
   const cleanInput = input.replace(/[\s\-\+]/g, '');
   return emailRegex.test(input) || phoneRegex.test(cleanInput);
 }
-
-// Show error message
+ 
 function showLoginError(fieldId, message) {
   const errorElement = document.getElementById(`error-${fieldId}`);
   if (errorElement) {
@@ -18,7 +17,7 @@ function showLoginError(fieldId, message) {
   }
 }
 
-// Clear error message
+ 
 function clearLoginError(fieldId) {
   const errorElement = document.getElementById(`error-${fieldId}`);
   if (errorElement) {
@@ -27,18 +26,17 @@ function clearLoginError(fieldId) {
   }
 }
 
-// Toggle password visibility
+ 
 function toggleLoginPassword() {
   const password = document.getElementById('password');
   const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
   password.setAttribute('type', type);
 }
-
-// Form submission
+ 
 loginForm?.addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // Clear all previous errors
+ 
   const allErrors = document.querySelectorAll('.error-msg');
   allErrors.forEach(e => {
     e.textContent = '';
@@ -46,8 +44,7 @@ loginForm?.addEventListener('submit', function(e) {
   });
 
   let isValid = true;
-
-  // Validate Email or Phone
+ 
   const email = document.getElementById('email').value.trim();
   if (!email) {
     showLoginError('email', 'Email or phone number is required');
@@ -58,8 +55,7 @@ loginForm?.addEventListener('submit', function(e) {
   } else {
     clearLoginError('email');
   }
-
-  // Validate Password
+ 
   const password = document.getElementById('password').value;
   if (!password) {
     showLoginError('password', 'Password is required');
@@ -68,9 +64,9 @@ loginForm?.addEventListener('submit', function(e) {
     clearLoginError('password');
   }
 
-  // If all validations pass
+  
   if (isValid) {
-    // Check if user exists in registered users
+    
     const registeredUser = JSON.parse(localStorage.getItem('rentifyUser'));
     
     if (!registeredUser) {
@@ -79,7 +75,7 @@ loginForm?.addEventListener('submit', function(e) {
       return;
     }
 
-    // Check if email/phone matches
+ 
     const userEmail = registeredUser.email;
     const userPhone = registeredUser.phone;
     const inputIsEmail = email.includes('@');
@@ -92,8 +88,7 @@ loginForm?.addEventListener('submit', function(e) {
       return;
     }
 
-    // For demo purposes, accept any password (in production, this would verify against a hashed password)
-    // Store the current login session
+   
     const rememberMe = document.getElementById('remember').checked;
     
     if (rememberMe) {
@@ -104,15 +99,14 @@ loginForm?.addEventListener('submit', function(e) {
       localStorage.removeItem('userEmail');
     }
 
-    // Set last login
+    
     registeredUser.lastLogin = new Date().toISOString();
     localStorage.setItem('rentifyUser', JSON.stringify(registeredUser));
     
     showLoginSuccess();
   }
 });
-
-// Show login success message
+ 
 function showLoginSuccess() {
   const toast = document.createElement('div');
   toast.className = 'toast show';
@@ -126,7 +120,7 @@ function showLoginSuccess() {
   }, 500);
 }
 
-// Real-time validation on blur
+ 
 document.getElementById('email')?.addEventListener('blur', function() {
   if (!this.value.trim()) {
     showLoginError('email', 'Email or phone number is required');
@@ -145,7 +139,7 @@ document.getElementById('password')?.addEventListener('blur', function() {
   }
 });
 
-// Check if user was previously remembered
+ 
 window.addEventListener('DOMContentLoaded', function() {
   const rememberMe = localStorage.getItem('rememberMe');
   const userEmail = localStorage.getItem('userEmail');
@@ -156,7 +150,7 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Social login buttons (placeholder)
+ 
 document.querySelectorAll('.social-btn')?.forEach(btn => {
   btn.addEventListener('click', function(e) {
     e.preventDefault();
@@ -165,7 +159,7 @@ document.querySelectorAll('.social-btn')?.forEach(btn => {
   });
 });
 
-// Forgot password handler
+ 
 document.querySelector('.forgot-link')?.addEventListener('click', function(e) {
   e.preventDefault();
   alert('Password reset feature would be implemented here. You would receive an email with a reset link.');
